@@ -1,13 +1,11 @@
 import { validationResult } from "express-validator";
-import { Model } from "sequelize";
-import type { UserModel } from "../models/User.ts";
 import { login, register } from "../auth.ts";
 import type { Request, Response } from "express";
-import type { LoginRequest, TokenResponse } from "../dto/dto.ts";
+import type { LoginRequest } from "../dto/dto.ts";
+
 
 export const registerHandler =
-    // @ts-ignore
-    async (req, res) => {
+    async (req: Request, res: Response) => {
         // Check for validation errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -16,14 +14,14 @@ export const registerHandler =
 
         try {
             const { email, password } = req.body;
-            const user: Model<UserModel> = await register(email, password);
+            const user = await register(email, password);
             res.json({ user });
         } catch (error) {
             res.status(400).json({ error: error instanceof Error ? error.message : 'Unknown error occurred' });
         }
     }
 
-export const loginHandler = async (req: Request<{}, {}, LoginRequest>, res: Response) => {
+export const loginHandler = async (req: LoginRequest, res: Response) => {
     try {
         const { email, password } = req.body;
         const { token } = await login(email, password);
