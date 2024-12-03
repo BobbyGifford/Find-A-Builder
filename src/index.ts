@@ -3,7 +3,7 @@ import { registerValidation } from './dto/dto.ts';
 import { loginHandler, protectedRouteHandler, registerHandler } from "./handlers/auth.ts";
 import { authMiddleware } from "./middleware/auth.ts";
 import cookieParser from 'cookie-parser';
-import { createBuilderPost } from "./handlers/builderPosts.ts";
+import { createBuilderPost, getBuilderPost } from "./handlers/builderPosts.ts";
 
 const app = express();
 
@@ -20,7 +20,9 @@ app.post('/register',
 app.post('/builder_posts',
     // @ts-ignore
     authMiddleware,
-    createBuilderPost)
+    createBuilderPost);
+
+app.get("/builder_posts", getBuilderPost);
 
 app.post('/login',
     loginHandler
@@ -33,13 +35,6 @@ app.get('/protected', authMiddleware, protectedRouteHandler);
 app.post('/logout', (_req: Request, res: Response) => {
     res.clearCookie('jwt');
     res.json({ message: 'Logged out successfully' });
-});
-
-// Error handling middleware
-// @ts-ignore
-app.use((err: Error, _req: Request, res: Response) => {
-    console.error(err.stack);
-    res.status(500).json({ error: 'Something broke!' });
 });
 
 const PORT = 3000;

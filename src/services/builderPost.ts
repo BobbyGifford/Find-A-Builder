@@ -23,3 +23,7 @@ export const createPost = async (creationData: BuilderPostCreate) => {
         profession
     }).returning({ id: builderPostsTable.id });
 };
+
+export const getPosts = async () => {
+    return db.select().from(builderPostsTable)
+}

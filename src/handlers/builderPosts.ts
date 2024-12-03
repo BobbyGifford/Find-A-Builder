@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { createPost } from "../services/builderPost.ts";
+import { createPost, getPosts } from "../services/builderPost.ts";
 
 interface CreateBuilderPostRequest extends Request {
     user: {
@@ -31,3 +31,11 @@ export const createBuilderPost =
             res.status(400).json({ error: error instanceof Error ? error.message : 'Unknown error occurred' });
         }
     }
+
+export const getBuilderPost = async (_: Request, res: Response) => {
+    try {
+        const results = await getPosts();
+        res.json({ results });
+    } catch {
+    }
+}
