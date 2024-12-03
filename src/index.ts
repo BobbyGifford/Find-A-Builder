@@ -3,6 +3,7 @@ import { registerValidation } from './dto/dto.ts';
 import { loginHandler, protectedRouteHandler, registerHandler } from "./handlers/auth.ts";
 import { authMiddleware } from "./middleware/auth.ts";
 import cookieParser from 'cookie-parser';
+import { createBuilderPost } from "./handlers/builderPosts.ts";
 
 const app = express();
 
@@ -15,6 +16,11 @@ app.post('/register',
     // @ts-ignore
     registerHandler
 );
+
+app.post('/builder_posts',
+    // @ts-ignore
+    authMiddleware,
+    createBuilderPost)
 
 app.post('/login',
     loginHandler

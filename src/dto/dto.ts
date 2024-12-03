@@ -15,6 +15,6 @@ export interface TokenResponse {
 
 // Validation middleware for register endpoint
 export const registerValidation = [
-    body('email').isEmail(),
+    body('email').isEmail().notEmpty(),
     body('password').notEmpty()
 ];

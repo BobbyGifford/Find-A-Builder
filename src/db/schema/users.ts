@@ -1,6 +1,6 @@
 import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
 import { relations } from 'drizzle-orm';
-import { builderPosts } from "./builderPosting.ts";
+import { builderPostsTable } from "./builderPosting.ts";
 
 export const usersTable = pgTable("users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -9,5 +9,5 @@ export const usersTable = pgTable("users", {
 });
 
 export const usersRelations = relations(usersTable, ({ one }) => ({
-    builderPosts: one(builderPosts),
+    builderPosts: one(builderPostsTable),
 }));
