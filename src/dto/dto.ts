@@ -1,13 +1,6 @@
 import { body } from 'express-validator';
 
 // Define interfaces for request bodies
-export interface RegisterRequest {
-    body: {
-        email: string,
-        password: string,
-    }
-}
-
 export interface LoginRequest {
     body: {
         email: string,

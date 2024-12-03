@@ -1,12 +1,13 @@
 import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { relations } from 'drizzle-orm';
+import { builderPosts } from "./builderPosting.ts";
 
 export const usersTable = pgTable("users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    // name: varchar({ length: 255 }).notNull(),
     email: varchar({ length: 255 }).notNull().unique(),
     password: varchar({ length: 255 }).notNull(),
-    // phone: varchar({ length: 255 }).notNull(),
-    // website: varchar({ length: 255 }).notNull(),
-    // profession: varchar({ length: 255 }).notNull(),
-    // description: varchar({ length: 255 }).notNull(),
 });
+
+export const usersRelations = relations(usersTable, ({ one }) => ({
+    builderPosts: one(builderPosts),
+}));

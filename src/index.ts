@@ -1,4 +1,4 @@
-import express, { type Request, type Response, type NextFunction } from 'express';
+import express, { type Request, type Response } from 'express';
 import { registerValidation } from './dto/dto.ts';
 import { loginHandler, protectedRouteHandler, registerHandler } from "./handlers/auth.ts";
 import { authMiddleware } from "./middleware/auth.ts";
@@ -24,14 +24,14 @@ app.post('/login',
 // @ts-ignore
 app.get('/protected', authMiddleware, protectedRouteHandler);
 // Logout route
-app.post('/logout', (req: Request, res: Response) => {
+app.post('/logout', (_req: Request, res: Response) => {
     res.clearCookie('jwt');
     res.json({ message: 'Logged out successfully' });
 });
 
 // Error handling middleware
 // @ts-ignore
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, _req: Request, res: Response) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Something broke!' });
 });

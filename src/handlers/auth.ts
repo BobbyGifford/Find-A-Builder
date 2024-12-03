@@ -3,7 +3,6 @@ import { login, register } from "../auth.ts";
 import type { Request, Response } from "express";
 import type { LoginRequest } from "../dto/dto.ts";
 
-
 export const registerHandler =
     async (req: Request, res: Response) => {
         // Check for validation errors
@@ -14,7 +13,7 @@ export const registerHandler =
 
         try {
             const { email, password } = req.body;
-            const user = await register(email, password);
+            const user: { id: string }[] = await register(email, password);
             res.json({ user });
         } catch (error) {
             res.status(400).json({ error: error instanceof Error ? error.message : 'Unknown error occurred' });
