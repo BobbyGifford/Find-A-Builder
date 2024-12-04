@@ -8,8 +8,12 @@ import {
 import { authMiddleware } from "./middleware/auth.ts";
 import cookieParser from "cookie-parser";
 import { createBuilderPost, getBuilderPost } from "./handlers/builderPosts.ts";
+import cors from "cors";
 
 const app = express();
+
+// Apply CORS middleware
+app.use(cors());
 
 // Middleware
 app.use(express.json());
